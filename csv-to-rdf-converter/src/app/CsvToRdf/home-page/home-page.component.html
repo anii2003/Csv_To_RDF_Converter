@@ -1,0 +1,223 @@
+<div class="min-h-screen bg-gradient-to-b from-rose-400 to-purple-700">
+  <!-- Header -->
+  <header class="bg-white/10 backdrop-blur-sm border-b border-white/20">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-white/20 rounded-lg">
+          <!-- Sparkles icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423L16.5 15.75l.394 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.394a2.25 2.25 0 00-1.423 1.423z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-white">CSV to RDF Converter</h1>
+          <p class="text-white/80">Convierte tus datos CSV a formato RDF usando un schema personalizado</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- LEFT COLUMN -->
+      <div class="space-y-6">
+        <!-- CSV Upload -->
+        <div class="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl rounded-lg">
+          <div class="p-6 pb-4">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-2">
+              <!-- File icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Archivo CSV
+            </h2>
+            <p class="text-sm text-gray-600">Sube tu archivo CSV con los datos que deseas convertir a RDF</p>
+          </div>
+          <div class="px-6 pb-6">
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-rose-400 transition-colors">
+              <!-- Upload icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="text-sm text-gray-600 mb-2">
+                {{ csvFile ? csvFile.name : 'Haz clic para seleccionar tu archivo CSV' }}
+              </p>
+              <label class="inline-flex items-center px-4 py-2 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-md cursor-pointer transition-colors">
+                <input type="file" (change)="onCsvSelected($event)" accept=".csv" class="hidden" />
+                Seleccionar CSV
+              </label>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-lg mt-4">
+              <p class="text-xs text-blue-800">
+                <strong>Formato esperado:</strong> Archivo CSV con headers en la primera fila. Ejemplo: nombre,edad,email
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- JSON Schema Upload -->
+        <div class="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl rounded-lg">
+          <div class="p-6 pb-4">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-2">
+              <!-- Code icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Schema JSON
+              <!-- Info button -->
+              <div class="relative ml-auto">
+                <button 
+                  type="button"
+                  class="w-5 h-5 text-gray-400 hover:text-purple-500 transition-colors"
+                  (mouseenter)="showTooltip = true"
+                  (mouseleave)="showTooltip = false"
+                  (click)="showTooltip = !showTooltip"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </button>
+                
+                <!-- Tooltip -->
+                <div 
+                  *ngIf="showTooltip"
+                  class="fixed right-4 top-20 w-96 bg-white border border-gray-200 rounded-lg shadow-2xl p-4  -translate-y-1/2 mr-8"
+                >
+                  <h3 class="font-semibold text-gray-800 mb-3">Estructura del Schema JSON</h3>
+                  <div class="space-y-3 text-sm text-gray-600">
+                    <div>
+                      <strong class="text-purple-600">files:</strong> Rutas de archivos de entrada y salida
+                      <div class="bg-gray-50 p-2 rounded mt-1 font-mono text-xs">
+                        "files": {{"{"}} "csv_path": "datos.csv", "output_ttl": "salida.ttl" {{"}"}}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <strong class="text-purple-600">prefixes:</strong> Namespaces RDF utilizados
+                      <div class="bg-gray-50 p-2 rounded mt-1 font-mono text-xs">
+                        "prefixes": {{"{"}} "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#" {{"}"}}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <strong class="text-purple-600">key_column:</strong> Columna que actúa como identificador único
+                      <div class="bg-gray-50 p-2 rounded mt-1 font-mono text-xs">
+                        "key_column": "DOI"
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <strong class="text-purple-600">classes:</strong> Define las clases RDF y sus tipos
+                      <div class="bg-gray-50 p-2 rounded mt-1 font-mono text-xs">
+                        "classes": {{"{"}} "article": {{"{"}} "types": ["bibo:Article"] {{"}"}} {{"}"}}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <strong class="text-purple-600">properties:</strong> Mapeo de columnas CSV a propiedades RDF
+                      <div class="bg-gray-50 p-2 rounded mt-1 font-mono text-xs">
+                        "Title": {{"{"}} "predicate": "dcterms:title", "type": "xsd:string" {{"}"}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-3 border-t border-gray-200">
+                    <p class="text-xs text-gray-500">
+                      <strong>Tip:</strong> Cada columna del CSV debe tener su correspondiente mapeo en "properties"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </h2>
+            <p class="text-sm text-gray-600">Sube el archivo JSON que define cómo mapear tu CSV a RDF</p>
+          </div>
+          <div class="px-6 pb-6">
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-purple-400 transition-colors">
+              <!-- Upload icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="text-sm text-gray-600 mb-2">
+                {{ jsonFile ? jsonFile.name : 'Haz clic para seleccionar tu schema JSON' }}
+              </p>
+              <label class="inline-flex items-center px-4 py-2 border border-purple-300 text-purple-600 hover:bg-purple-50 rounded-md cursor-pointer transition-colors">
+                <input type="file" (change)="onJsonSelected($event)" accept=".json" class="hidden" />
+                Seleccionar JSON
+              </label>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-lg mt-4">
+              <p class="text-xs text-amber-800">
+                <strong>Estructura esperada:</strong> JSON con mapeo de columnas CSV a propiedades RDF. Debe incluir prefijos, clases y propiedades.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Convert Button -->
+        <button
+          (click)="convertToRdf()"
+          [disabled]="isProcessing || !csvFile || !jsonFile"
+          class="w-full bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white font-semibold py-3 shadow-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        >
+          {{ isProcessing ? 'Procesando...' : 'Convertir a RDF' }}
+        </button>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="space-y-6 z-10">
+        <!-- TTL Preview -->
+        <div class="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl rounded-lg">
+          <div class="p-6 pb-4">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-2">
+              <!-- File text icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Previsualización TTL
+            </h2>
+            <p class="text-sm text-gray-600">Vista previa del archivo RDF generado en formato Turtle</p>
+          </div>
+          <div class="px-6 pb-6">
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 border border-green-300 rounded-lg p-4 min-h-[400px]">
+              <textarea
+                class="w-full h-[425px] bg-transparent border-none text-slate-700 font-mono text-sm resize-none focus:outline-none focus:ring-0 placeholder-slate-400"
+                [value]="ttlPreview || '// El archivo TTL aparecerá aquí después de la conversión...'"
+                readonly
+                placeholder="// El archivo TTL aparecerá aquí después de la conversión..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl rounded-lg">
+          <div class="p-6 pb-4">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-2">
+              <!-- Download icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Descargar Resultado
+            </h2>
+            <p class="text-sm text-gray-600">Descarga tu archivo RDF convertido en formato .ttl</p>
+          </div>
+          <div class="px-6 pb-6">
+            <button
+              (click)="downloadTtl()"
+              [disabled]="!ttlPreview"
+              class="w-full bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white font-semibold py-3 shadow-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+            >
+              <!-- Download icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Descargar archivo .ttl
+            </button>
+            <p *ngIf="ttlPreview" class="text-xs text-gray-600 mt-2 text-center">
+              Archivo listo para descargar: converted-data.ttl
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
