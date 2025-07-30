@@ -1,0 +1,168 @@
+{
+  "files": {
+    "csv_path": "scopus.csv",
+    "output_ttl": "ArticulosUniversidadSalesiana.ttl"
+  },
+  "prefixes": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "res": "http://ac-utpl.org/resource/"
+  },
+  "key_column": "DOI",
+  "uri_rules": {
+    "DOI": "https://doi.org/",
+    "EID": "http://ac-utpl.org/resource/"
+  },
+  "classes": {
+    "article": {
+      "typeProperty": "rdf:type",
+      "types": ["bibo:AcademicArticle", "schema:ScholarlyArticle"]
+    },
+    "author": {
+      "typeProperty": "rdf:type",
+      "types": ["foaf:Person"]
+    }
+  },
+  "relationships": {
+    "author": "schema:author",
+    "affiliation": "schema:affiliation"
+  },
+  "properties": {
+    "DOI": {
+      "predicate": "bibo:identifier",
+      "type": "xsd:integer",
+      "isKey": true,
+      "entity": "article"
+    },
+    "Title": {
+      "predicate": "dcterms:title",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Year": {
+      "predicate": "schema:datePublished",
+      "type": "xsd:gYear",
+      "entity": "article"
+    },
+    "Abstract": {
+      "predicate": "schema:abstract",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Authors": {
+      "predicate": "schema:name",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "author"
+    },
+    "Author full names": {
+      "predicate": "schema:givenName",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "author"
+    },
+    "Author(s) ID": {
+      "predicate": "schema:identifier",
+      "type": "xsd:integer",
+      "entity": "author"
+    },
+    "Source title": {
+      "predicate": "schema:isPartOf",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Volume": {
+      "predicate": "schema:volumeNumber",
+      "type": "xsd:integer",
+      "entity": "article"
+    },
+    "Issue": {
+      "predicate": "schema:issueNumber",
+      "type": "xsd:float",
+      "entity": "article"
+    },
+    "Art. No.": {
+      "predicate": "schema:articleNumber",
+      "type": "xsd:integer",
+      "entity": "article"
+    },
+    "Cited by": {
+      "predicate": "schema:citation",
+      "type": "xsd:integer",
+      "entity": "article"
+    },
+    "Document Type": {
+      "predicate": "schema:encodingFormat",
+      "type": "xsd:anyURI",
+      "entity": "article",
+      "valueMap": {
+        "Conference paper": "http://purl.org/spar/fabio/ConferencePaper",
+        "Article": "http://purl.org/spar/fabio/JournalArticle",
+        "Book chapter": "http://purl.org/spar/fabio/BookChapter",
+        "Review": "http://purl.org/spar/fabio/ReviewArticle",
+        "Editorial": "http://purl.org/spar/fabio/Editorial",
+        "Erratum": "http://purl.org/spar/fabio/Erratum",
+        "Short survey": "http://purl.org/spar/fabio/ShortSurvey",
+        "Note": "http://purl.org/spar/fabio/TechnicalReport",
+        "Letter": "http://purl.org/spar/fabio/Letter",
+        "Data paper": "http://purl.org/spar/fabio/DataPaper",
+        "Book": "http://purl.org/spar/fabio/Book"
+      }
+    },
+    "Publication Stage": {
+      "predicate": "schema:publicationStage",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Open Access": {
+      "predicate": "schema:isAccessibleForFree",
+      "type": "xsd:boolean",
+      "entity": "article",
+      "boolean_map": {
+        "true_values": ["yes", "open access", "gold open access", "all open access"],
+        "false_values": ["no", "closed access"]
+      }
+    },
+    "Source": {
+      "predicate": "schema:provider",
+      "type": "xsd:anyURI",
+      "entity": "article"
+    },
+    "Link": {
+      "predicate": "schema:url",
+      "type": "xsd:anyURI",
+      "entity": "article"
+    },
+    "Author Keywords": {
+      "predicate": "schema:keywords",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Funding Texts": {
+      "predicate": "schema:funding",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    },
+    "Funding Details": {
+      "predicate": "schema:funder",
+      "type": "xsd:anyURI",
+      "entity": "article"
+    },
+    "EID": {
+      "predicate": "schema:identifier",
+      "type": "xsd:string",
+      "lang": "en",
+      "entity": "article"
+    }
+  }
+  
+}
