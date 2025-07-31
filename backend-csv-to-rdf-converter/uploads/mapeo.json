@@ -11,7 +11,7 @@
     "foaf": "http://xmlns.com/foaf/0.1/",
     "res": "http://ac-utpl.org/resource/"
   },
-  "multi_value_separator": ",",
+  "multi_value_separator": ";",
   "key_column": "DOI",
   "uri_rules": {
     "DOI": "https://doi.org/",
